@@ -1,6 +1,9 @@
  #  App
+![Alt text](https://sonarcloud.io/api/project_badges/measure?project=commititup_messageboard&metric=alert_status)
+
   # see [Demo](http://rohit.one)
-  This is A Demo App which support REST API. It is build using
+
+This is A Demo App which support REST API. It is build using
 
     - GOLANG (Backend)
     - Vue js  (Frontend)
