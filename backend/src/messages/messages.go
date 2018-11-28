@@ -93,28 +93,16 @@ func AddMessage(w http.ResponseWriter, r *http.Request) {
 
 
 //FUNCTION TO DELETE A MESSAGE FROM DATABASE
-func DeleteMessage(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
-	type Form struct {
-		Id int
-	}
-
-	var form Form
-
-	err := decoder.Decode(&form)
+func DeleteMessage(w http.ResponseWriter, r *http.Request) {	
+        params := mux.Vars(r)
+	i    := params["id"]
+	id, err := strconv.Atoi(i)
 	if err != nil {
-		output.Send(w, nil, err)
+		output.Send(w, nil, errors.New("id is of Invalid Type "))
+                return
 	}
-
-	// If form is incomplete, throw error
-	if form.Id <= 0 {
-		log.Printf(" submitted incomplete form ")
-		output.Send(w, nil, errors.New("id is empty"))
-		return
-	}
-
-	query := fmt.Sprintf("delete from messages where id=%d", form.Id)
-	log.Printf("Executing delete for id=%d",form.Id)
+	query := fmt.Sprintf("delete from messages where id=%d", id)
+	log.Printf("Executing delete for id=%d",id)
 
 	res,err := db.DbConn.Exec(query)
 
@@ -136,7 +124,7 @@ func DeleteMessage(w http.ResponseWriter, r *http.Request) {
 	return
 	}
 
-	log.Printf(" deleted message id %d from messages", form.Id)
+	log.Printf(" deleted message id %d from messages", id)
 	data := map[string]interface{}{"deleted": true}
 	output.Send(w, data, nil)
 }
@@ -168,6 +156,9 @@ func GetDetailMessage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if rows.Next() == false{
+		output.Send(w, nil, errors.New("messaged doesn't exist"))
+	}
 
 	var data  []map[string]interface{} 
 	for rows.Next() {
@@ -182,7 +173,6 @@ func GetDetailMessage(w http.ResponseWriter, r *http.Request) {
 			output.Send(w, nil, errors.New("Unable to fetch messages"))
 			return
 		}
-
 		record["id"] = ids
 		record["title"] = title
 		record["description"] = body
