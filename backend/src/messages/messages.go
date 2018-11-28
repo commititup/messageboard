@@ -175,7 +175,7 @@ func GetDetailMessage(w http.ResponseWriter, r *http.Request) {
 		var title, username,body string
 		var ids int
 
-		err = rows.Scan(&id, &title, &body,&username)
+		err = rows.Scan(&ids, &title, &body,&username)
 
 		if err != nil {
 			log.Printf(fmt.Sprintf("Error to read values of db Query, err: %s", err.Error()))

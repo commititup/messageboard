@@ -2,7 +2,7 @@
 
 <div >
         <div>
-          <h3 style="color:black;text-decoration:underline;text-align:center;">Demo App for Qlik.com</h3>
+          <h3 style="color:black;text-decoration:underline;text-align:center;">Demo App : Messageboard </h3>
         </div>
 
 <div class="col-md-10 col-md-offset-1">
