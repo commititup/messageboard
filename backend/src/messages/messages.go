@@ -141,14 +141,9 @@ func GetDetailMessage(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	// If form is incomplete, throw error
-	if id <= 0 {
-		log.Printf("%d submitted incomplete form",id)
-		output.Send(w, nil, errors.New("id is empty"))
-		return
-	}
-
 	query := fmt.Sprintf("select * from messages where id=%d", id)	
+	log.Printf("Executing query : %s",query)
+
 	rows, err := db.DbConn.Query(query)
 	if err != nil {
 		log.Printf(fmt.Sprintf("Error to execute db Query, err: %s: %s", err.Error(), query))
@@ -157,29 +152,26 @@ func GetDetailMessage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if rows.Next() == false{
-		output.Send(w, nil, errors.New("messaged doesn't exist"))
+		output.Send(w, nil, errors.New("message doesn't exist"))
+		return
 	}
 
 	var data  []map[string]interface{} 
-	for rows.Next() {
-		record := make(map[string]interface{})
-		var title, username,body string
-		var ids int
-
-		err = rows.Scan(&ids, &title, &body,&username)
-
-		if err != nil {
-			log.Printf(fmt.Sprintf("Error to read values of db Query, err: %s", err.Error()))
-			output.Send(w, nil, errors.New("Unable to fetch messages"))
-			return
-		}
-		record["id"] = ids
-		record["title"] = title
-		record["description"] = body
-		record["author"] = username
-		record["pallindrome"] =IsPalindrome(body) 
-		data = append(data, record)
+	record := make(map[string]interface{})
+	var title, username,body string
+	var ids int
+	err = rows.Scan(&ids, &title, &body,&username)
+	if err != nil {
+		log.Printf(fmt.Sprintf("Error to read values of db Query, err: %s", err.Error()))
+		output.Send(w, nil, errors.New("Unable to fetch messages"))
+		return
 	}
+	record["id"] = ids
+	record["title"] = title
+	record["description"] = body
+	record["author"] = username
+	record["pallindrome"] =IsPalindrome(body) 
+	data = append(data, record)
 
 	output.RawSend(w, data, nil)
 }

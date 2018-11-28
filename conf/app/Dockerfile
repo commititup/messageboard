@@ -8,6 +8,8 @@ RUN mkdir -p /usr/bin
 
 #make destination dir for frontend content to store
 RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html/dist
+RUN mkdir -p /var/www/html/src/assets
 
 #copy the app config file to destination
 COPY ./conf/app/config.json /etc/app/
@@ -16,9 +18,9 @@ COPY ./conf/app/config.json /etc/app/
 COPY ./backend/bin/server /usr/bin
 
 #copy the frontend to the destination
-COPY ./frontend/dist /var/www/html
+COPY ./frontend/dist/* /var/www/html/dist/
 COPY ./frontend/index.html  /var/www/html
-COPY ./frontend/src/assets /var/www/html/
+COPY ./frontend/src/assets/* /var/www/html/src/assets/
 
 #open port 
 EXPOSE 4443
