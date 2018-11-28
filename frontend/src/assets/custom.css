@@ -1,0 +1,34 @@
+body {
+  background-color: #e0ebeb;
+}
+
+/* BOOTSTRAP MODAL STYLE */
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+/*VUE GOOD TABLE MODULE SYTLE */
+.vue-table-header{
+  font-size:12px ;
+}
+.vue-table-rows{
+  font-size:13px ;
+  color:black;
+}

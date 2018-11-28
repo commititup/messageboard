@@ -1,0 +1,10 @@
+{
+  "AppRoot":"/var/www/html",	
+  "port":"4443",
+  "database":{
+    "hostname":"db",
+    "username":"messageuser",
+    "dbname":"messagedb",
+    "password":"messagepassword"
+  }
+}
