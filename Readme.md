@@ -22,7 +22,7 @@ we have nginx running in front of the backend API acting as a reverse proxy rout
 
 Each Parts of API will run on separate docker containers and talk with each other through internal inbuilt docker networks
 
-
+![Alt text](doc/Arch.png?raw=true "Architecture")
 
 ### Installation
 To run the app as a whole you should have docker and docker-compose installed
