@@ -10,15 +10,15 @@ RUN mkdir -p /usr/bin
 RUN mkdir -p /var/www/html
 
 #copy the app config file to destination
-COPY conf/config.json /etc/app/
+COPY ./conf/app/config.json /etc/app/
 
 #copy the backend binary to destination
-COPY ../../backend/bin/server /usr/bin
+COPY ./backend/bin/server /usr/bin
 
 #copy the frontend to the destination
-COPY ../../frontend/dist /var/www/html
-COPY ../../frontend/index.html  /var/www/html
-COPY ../../frontend/src/assets /var/www/html/
+COPY ./frontend/dist /var/www/html
+COPY ./frontend/index.html  /var/www/html
+COPY ./frontend/src/assets /var/www/html/
 
 #open port 
 EXPOSE 4443

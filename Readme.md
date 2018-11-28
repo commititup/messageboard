@@ -134,7 +134,7 @@ Want to contribute? Great!
 
 * **URL**
 
-  /message
+  /message/:id
 
 * **Method:**
 
@@ -143,8 +143,7 @@ Want to contribute? Great!
 *  **URL Params**
 
    **Required:**
- 
-   `id=[integer]`
+	`id=[integer]` 
 
 * **Data Params**
 
