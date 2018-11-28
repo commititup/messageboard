@@ -2,7 +2,7 @@
 
 <div >
         <div>
-          <h3 style="color:black;text-decoration:underline;text-align:center;">Demo App : Messageboard </h3>
+          <h3 style="color:black;text-decoration:underline;text-align:center;">Demo App for Message Board</h3>
         </div>
 
 <div class="col-md-10 col-md-offset-1">
@@ -147,7 +147,7 @@ import Loading from 'vue-loading-overlay'
  export default {
 data:function (){
     return{
-      url :"http://localhost:8080/http://localhost:4443",
+      url :"",
       pagination_options:{
         enabled:true,
         perPage:8,
@@ -199,12 +199,9 @@ data:function (){
     },
 
     async deleteMessage(id){
-      var data={
-        id:id
-      }
-      var apiUrl = this.url+"/message"
+      var apiUrl = this.url+"/message/"+id
       this.loading=true
-      var status = await apiService.Delete(apiUrl,JSON.stringify(data));
+      var status = await apiService.Delete(apiUrl);
       this.loading=false
       if(status.error){
             return this.notificate('App says',status.error,'error')

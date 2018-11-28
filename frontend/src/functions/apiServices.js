@@ -28,8 +28,8 @@ function Post (url,data) {
     })
 }
 
-function Delete (url,data) {
-  return axios.delete(url,{data:data})
+function Delete (url) {
+  return axios.delete(url)
     .then(function (response) {
         return response.data;
     })
