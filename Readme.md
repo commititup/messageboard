@@ -33,6 +33,8 @@ Each Parts of API will run on separate docker containers and talk with each othe
  $sudo pip install boto3
  $ ./spinAwsInstance --access_key < AWS access key > --secret_key < AWS secret acccess key >
  ```
+ SSH to newly created instance.pull the repo and proceed with these steps
+ 
  - Method 1:
     Run initial-node-bootstrap.sh with sudo privileges and it will take care of all the things
  - Method 2
