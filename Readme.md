@@ -28,31 +28,30 @@ Each Parts of API will run on separate docker containers and talk with each othe
 ![Alt text](doc/Arch.png?raw=true "Architecture")
 
 ### Installation
+     - Method 1:
+        Run initial-node-bootstrap.sh with sudo privileges and it will take care of all the things
+     - Method 2
+         To run the app as a whole you should have docker and docker-compose installed
+         See [How to install docker and docker-compose](https://medium.com/@praaveen/part-2-docker-ce-and-docker-compose-installation-with-ubuntu-ef7b16bd3531)
 
-- Method 1
-  Run initial-node-bootstrap.sh with sudo privileges and it will take care of all the things
-- Method 2
-To run the app as a whole you should have docker and docker-compose installed
-See [How to install docker and docker-compose](https://medium.com/@praaveen/part-2-docker-ce-and-docker-compose-installation-with-ubuntu-ef7b16bd3531)
 
+         After install is finished just run from root folder
+	 ```sh
+	 $ docker-compose up -d 
+	 Starting postgresql_db_1
+	 Starting postgresql_web_1
+	 Starting postgresql_proxy_1
+	 Attaching to postgresql_db_1, postgresql_web_1, postgresql_proxy_1
+	 ```
+	 This will will and start the containers and the app
 
-After install is finished just run from root folder
-```sh
-$ docker-compose up -d 
-Starting postgresql_db_1
-Starting postgresql_web_1
-Starting postgresql_proxy_1
-Attaching to postgresql_db_1, postgresql_web_1, postgresql_proxy_1
-```
-This will will and start the containers and the app
+	 Next create the db schema for the app
 
-Next create the db schema for the app
-
-```sh
-$ cd conf/postgres/
-$ ./sql.sh
-Password for user messageuser: 
-```
+	 ```sh
+	 $ cd conf/postgres/
+	 $ ./sql.sh
+	 Password for user messageuser: 
+	 ```
 ## Development
 
 Want to contribute? Great!
