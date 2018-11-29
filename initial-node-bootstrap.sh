@@ -1,4 +1,5 @@
 #!/bin/bash
+ set -e 
  echo "Adding docker repo and performing installation"
  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -13,7 +14,7 @@
  docker-compose up -d
  echo "sleeping for 10 Sec"
  sleep 10
- echo "creating DB Tables"
+ echo "creating DB Tables. see docker-compose file for the password "
 ./conf/postgres/sql.sh
 
  docker-compose stop 
