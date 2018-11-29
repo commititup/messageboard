@@ -28,14 +28,17 @@ Each Parts of API will run on separate docker containers and talk with each othe
 ![Alt text](doc/Arch.png?raw=true "Architecture")
 
 ### Installation
-     - Method 1:
-        Run initial-node-bootstrap.sh with sudo privileges and it will take care of all the things
-     - Method 2
-         To run the app as a whole you should have docker and docker-compose installed
-         See [How to install docker and docker-compose](https://medium.com/@praaveen/part-2-docker-ce-and-docker-compose-installation-with-ubuntu-ef7b16bd3531)
-
-
-         After install is finished just run from root folder
+   Spin An AWS instance by running this
+ ```sh
+ $sudo pip install boto3
+ $ ./spinAwsInstance --access_key < AWS access key > --secret_key < AWS secret acccess key >
+ ```
+ - Method 1:
+    Run initial-node-bootstrap.sh with sudo privileges and it will take care of all the things
+ - Method 2
+    To run the app as a whole you should have docker and docker-compose installed
+    See [How to install docker and docker-compose](https://medium.com/@praaveen/part-2-docker-ce-and-docker-compose-installation-with-ubuntu-ef7b16bd3531)
+    After install is finished just run from root folder
 	 ```sh
 	 $ docker-compose up -d 
 	 Starting postgresql_db_1
