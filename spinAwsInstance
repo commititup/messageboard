@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+
+import boto3
+from argparse import ArgumentParser
+import time
+import sys
+from termcolor import colored
+
+
+KeyName="TestingApp-EC2"
+
+parser = ArgumentParser(prog='Ec2Instance',usage='%(prog)s --access_key < aws access key > --secret_key <aws secret access key>')
+parser.add_argument('--access_key', nargs='?',help='aws access key',dest="access_key",required="true")
+parser.add_argument('--secret_key', nargs='?',help='aws secret access key',dest="secret_key",required="true")
+args = parser.parse_args()
+try:
+  if args.access_key and args.secret_key:
+
+							ec2 = boto3.resource('ec2',region_name="ap-south-1",aws_access_key_id=args.access_key,aws_secret_access_key=args.secret_key)
+
+							# create a file to store the key locally
+							outfile = open(KeyName+'.pem','w')
+
+							# call the boto ec2 function to create a key pair
+							key_pair = ec2.create_key_pair(KeyName=KeyName)
+
+							# capture the key and store it in a file
+							KeyPairOut = str(key_pair.key_material)
+							outfile.write(KeyPairOut)
+							try:
+								instances = ec2.create_instances(
+									ImageId='ami-0d773a3b7bb2bb1c1',
+									MinCount=1,
+					     			MaxCount=1,
+									KeyName=KeyName,
+									InstanceType="t2.micro"
+								)
+
+								for i in instances:
+								    instance = ec2.Instance(i.id)
+							        Retry=10
+							        count=0
+							        while (instance.state['Name'] not in ('running')) and (count < Retry):
+							            print ("Current state  : {0}".format(colored(instance.state['Name'], 'cyan')))
+							            count = count+1
+							            print ("retyring in 5 sec")
+							            time.sleep(5)
+							            instance.load()
+
+								    if(instance.state['Name'] =='running'):
+											print ("applying security group to the instance .\n")
+											response = instance.modify_attribute(Groups=['sg-dc69a5b1','sg-0d7179761185f00af'])
+											if not response['ResponseMetadata']['HTTPStatusCode'] ==200:
+												print ("Error in applying security group for the instance. please contact account holder\n")
+											print(" Id: {0}\n State: {1}\n Launched: {2}\n Pub. IP: {3}\n Arch: {4}\n Pub. DNS: {5}\n  ".format(
+									               colored(instance.id, 'cyan'),
+									               colored(instance.state['Name'], 'green'),
+									               colored(instance.launch_time, 'cyan'),
+									               colored(instance.public_ip_address, 'cyan'),
+									               colored(instance.architecture, 'cyan'),
+									               colored(instance.public_dns_name, 'green')
+	 								        ))
+
+
+							except Exception as e:
+								print e
+								sys.exit(1)
+
+  else:
+    raise ValueError
+except ValueError:
+        print("Incorrect args passed \n use --help for usage")
+        sys.exit(1)
+
+print (" Run chmod 400 {0}.pem \n".format(KeyName))
+print (" Run ssh -i '{0}.pem' ubuntu@{1} \n".format(KeyName,instance.public_dns_name))

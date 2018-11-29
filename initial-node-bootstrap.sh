@@ -16,3 +16,5 @@
  echo "creating DB Tables"
 ./conf/postgres/sql.sh
 
+ docker-compose stop 
+ docker-compose up -d
