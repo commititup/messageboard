@@ -7,7 +7,7 @@
  echo "Installing Docker and docker-compose and psql client"
  apt-get install -y docker-ce
  apt-get install -y docker-compose
- apt-get install postgresql-client
+ apt-get install -y postgresql-client
  echo "Building docker images"
  docker-compose build
  echo "starting docker instances"
